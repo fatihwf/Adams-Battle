@@ -1,0 +1,11 @@
+Bromen	earth	tank
+Leoxane	fire	assasin
+Mobayi	fire	tank
+Jagu	earth	assasin
+Atreus	earth	adc
+Marcus Aurelius	fire	mage
+Müccük	water	mage
+Mona Lisa	earth	mage
+Bedocan	water	assasin
+Lorach	water	adc
+Umai	water	mage
