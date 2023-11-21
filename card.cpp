@@ -1,21 +1,25 @@
 #include <iostream>
 #include "card.h"
 #include <string>
+
+
+
 using namespace std;
 
-
-Card::Card(string &n, string &e, string &t)
+Card::Card(string n, string e, string t) :
+    name(n), element(e), cardType(t)
 {
-    name = n ;
-    element = e ;
-    cardType = t ;
+
 }
 
-
-void Card::ult()
+Card::Card()
 {
-     hp = hp * 3 ;
-
+    this->name = "None" ;
+    this->element = "None" ;
+    this->atk = 0 ;
+    this->hp = 0;
+    this->cardType = "None" ;
+    this->skill = nullptr ;
 }
 
 void Card::setHp(int newHp)
@@ -32,3 +36,5 @@ void Card::displayCard()
 {
     cout << "\nHp: " << hp << "\nAttack: " << atk ;
 }
+
+

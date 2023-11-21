@@ -1,4 +1,5 @@
 #include "card.h"
+#include "skills.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -8,31 +9,27 @@ using namespace std;
 
 int main()
 {
-    int quitVariable = 0 ;
     int displayMainMenu() ;
+    void assignSkills(Card* cards, vector<void (*)()> &skills) ;
+    vector<void(*)()> getSkills() ;
+    Card* readCardsFromFile(const string& filename, int size) ;
 
-// Start reading cards
-    string name,element,cardType ;
 
-    Card* cards = new Card[SIZE] ;
+    // get card array
+    Card* cards = readCardsFromFile("cards.txt", SIZE);
 
-    ifstream cardFile ("cards.txt") ;
+    // get skill vector
+    vector<void(*)()> skills = getSkills() ;
 
-    if (!cardFile.is_open())
-    {
-        cout << "Error opening the file!" << endl;
-        return 1;
-    }
+    // assign skill to each card
+    assignSkills(cards,skills) ;
 
-    for(int i=0; i<SIZE; i++)
-    {
-        getline(cardFile,name,'\t') ;
-        getline(cardFile,element,'\t') ;
-        getline(cardFile,cardType,'\n') ;
 
-        cards[i] = Card(name,element,cardType) ;
-    }
 
+
+
+    // start program
+    int quitVariable = 0 ;
     while(quitVariable != 1)
     {
         switch(displayMainMenu())
@@ -64,7 +61,7 @@ int main()
 
 
     delete[] cards ;
-    cardFile.close() ;
+
 
     return(0) ;
 }
@@ -84,4 +81,36 @@ int displayMainMenu()
     cin >> a ;
     return(a) ;
 
+}
+
+void assignSkills(Card* cards, vector<void (*)()> &skills)
+{
+    for (int i = 0; i < SIZE; i++)
+    {
+        cards[i].skill = skills[i];
+    }
+}
+
+Card* readCardsFromFile(const string& filename, int size)
+{
+    ifstream cardFile(filename);
+
+    if (!cardFile.is_open())
+    {
+        cerr << "Error opening the file!" << endl;
+        return nullptr;
+    }
+
+    Card* cards = new Card[size] ;
+
+    for (int i = 0; i < size; i++)
+    {
+        getline(cardFile, cards[i].name, '\t');
+        getline(cardFile, cards[i].element, '\t');
+        getline(cardFile, cards[i].cardType, '\n');
+    }
+
+    cardFile.close();
+
+    return cards;
 }

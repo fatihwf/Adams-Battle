@@ -9,3 +9,4 @@ Mona Lisa	earth	mage
 Bedocan	water	assasin
 Lorach	water	adc
 Umai	water	mage
+Bebi	fire	mage
