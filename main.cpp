@@ -3,16 +3,19 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#define SIZE 10  // how many cards do we have
+#define SIZE 12  // how many cards do we have
 
 using namespace std;
 
 int main()
 {
+    // functions
     int displayMainMenu() ;
+    void viewCards(Card* cards,int size) ;
     void assignSkills(Card* cards, vector<void (*)()> &skills) ;
     vector<void(*)()> getSkills() ;
     Card* readCardsFromFile(const string& filename, int size) ;
+
 
 
     // get card array
@@ -45,6 +48,7 @@ int main()
                 break ;
             case 4:
                 // display Cards
+                viewCards(cards,SIZE) ;
                 break ;
             case 5:
                 // credits
@@ -107,7 +111,11 @@ Card* readCardsFromFile(const string& filename, int size)
     {
         getline(cardFile, cards[i].name, '\t');
         getline(cardFile, cards[i].element, '\t');
-        getline(cardFile, cards[i].cardType, '\n');
+        getline(cardFile, cards[i].cardType, '\t');
+        cardFile >> cards[i].cardIndex ;
+        getline(cardFile, cards[i].skillString, '\n') ;
+
+
     }
 
     cardFile.close();
