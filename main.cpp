@@ -1,34 +1,20 @@
-#include "card.h"
-#include "skills.h"
 #include <iostream>
-#include <fstream>
-#include <string>
-#define SIZE 12  // how many cards do we have
-
+#include <vector>
+#include "card.h"
+#include <Windows.h>
+#include <iostream>
 using namespace std;
+
+int displayMainMenu() ;
+void viewCards(vector<Card> allCards);
 
 int main()
 {
-    // functions
-    int displayMainMenu() ;
-    void viewCards(Card* cards,int size) ;
-    void assignSkills(Card* cards, vector<void (*)()> &skills) ;
-    vector<void(*)()> getSkills() ;
-    Card* readCardsFromFile(const string& filename, int size) ;
+    Assasin Leoxane("Leoxane","Fire","Assasin",1) ;
 
 
-
-    // get card array
-    Card* cards = readCardsFromFile("cards.txt", SIZE);
-
-    // get skill vector
-    vector<void(*)()> skills = getSkills() ;
-
-    // assign skill to each card
-    assignSkills(cards,skills) ;
-
-
-
+    vector<Card> allCards = {Leoxane} ;
+    cout << allCards[0].name;
 
 
     // start program
@@ -48,7 +34,7 @@ int main()
                 break ;
             case 4:
                 // display Cards
-                viewCards(cards,SIZE) ;
+                viewCards(allCards);
                 break ;
             case 5:
                 // credits
@@ -63,11 +49,6 @@ int main()
         }
     }
 
-
-    delete[] cards ;
-
-
-    return(0) ;
 }
 
 int displayMainMenu()
@@ -87,38 +68,54 @@ int displayMainMenu()
 
 }
 
-void assignSkills(Card* cards, vector<void (*)()> &skills)
+void viewCards(vector<Card> allCards)
 {
-    for (int i = 0; i < SIZE; i++)
+    vector<Card> fire  ;
+    vector<Card> water ;
+    vector<Card> earth ;
+
+    for(int i = 0; i<allCards.size(); i++)
     {
-        cards[i].skill = skills[i];
-    }
-}
-
-Card* readCardsFromFile(const string& filename, int size)
-{
-    ifstream cardFile(filename);
-
-    if (!cardFile.is_open())
-    {
-        cerr << "Error opening the file!" << endl;
-        return nullptr;
-    }
-
-    Card* cards = new Card[size] ;
-
-    for (int i = 0; i < size; i++)
-    {
-        getline(cardFile, cards[i].name, '\t');
-        getline(cardFile, cards[i].element, '\t');
-        getline(cardFile, cards[i].cardType, '\t');
-        cardFile >> cards[i].cardIndex ;
-        getline(cardFile, cards[i].skillString, '\n') ;
-
-
+        if(allCards[i].element == "Fire")
+        {
+            fire.push_back(allCards[i]) ;
+        }
+        else if(allCards[i].element == "Water" )
+        {
+            water.push_back(allCards[i]) ;
+        }
+        else if(allCards[i].element == "Earth" )
+        {
+            earth.push_back(allCards[i]) ;
+        }
     }
 
-    cardFile.close();
+    system("cls") ;
 
-    return cards;
+    cout << "Select the card you want to view.\n\n" ;
+
+    cout << "Fire Cards:  " ;
+        for(int i = 0; i<fire.size(); i++)
+    {
+        cout << i+1 << "." << fire[i].name ;
+    }
+
+    cout << "\n" ;
+    int selection ;
+    cin >> selection ;
+
+    system("cls") ;
+
+    for(int i = 0; i<allCards.size(); i++)
+    {
+        if(selection == allCards[i].cardIndex)
+        {
+            allCards[i].displayCard() ;
+            break;
+        }
+    }
+
+    cin.ignore(1000,'\n') ;
+    getchar() ;
+
 }
