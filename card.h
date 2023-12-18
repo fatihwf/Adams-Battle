@@ -1,16 +1,13 @@
-#ifndef CARDS_H
-#define CARDS_H
-
-#include <iostream>
+#ifndef CARD_H
+#define CARD_H
 #include <string>
-#include <vector>
-#include <Windows.h>
-#include <algorithm>
+#include <iostream>
+
 using namespace std;
 
 class Card
 {
-    private:
+    protected:
         int hp  ;
         int atk  ;
 
@@ -19,19 +16,36 @@ class Card
         string element;
         string cardType ;
         int cardIndex ;
-        string skillString;
 
-        void setHp(int newHp) ;
-        void setAtk(int newAtk) ;
+        Card(string n = "" , string e = "", string cardT = "" ,int cardI = 99) ;
+        Card(const Card &source) ;
+
         void displayCard() ;
-        void (*skill)() ;
 
+        virtual ~Card() = default ;
 
-        // 2 constructors
-        Card() ;
-        Card(string n, string e, string t, int i);
 };
 
-void viewCards(Card* cards, int size) ;
+class Assasin : public Card
+{
+    public:
+        Assasin(string n = "" , string e = "", string cardT = "" ,int cardI = 99) ;
+        Assasin(const Assasin &source) ;
 
-#endif // CARDS_H
+        virtual ~Assasin() override = default;
+};
+
+
+
+
+
+
+
+
+
+#endif // CARD_H
+
+
+
+
+
