@@ -1,7 +1,11 @@
-#ifndef CARD_H
-#define CARD_H
-#include <string>
+#ifndef CARDS_H
+#define CARDS_H
+
 #include <iostream>
+#include <string>
+#include <vector>
+#include <Windows.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -16,36 +20,70 @@ class Card
         string element;
         string cardType ;
         int cardIndex ;
+        string skillString;
 
-        Card(string n = "" , string e = "", string cardT = "" ,int cardI = 99) ;
-        Card(const Card &source) ;
-
+        void setHp(int newHp) ;
+        void setAtk(int newAtk) ;
         void displayCard() ;
+        int attack() ;
+        void (*skill)() ;
 
-        virtual ~Card() = default ;
-
+        Card() ;
+        // destructor
+        virtual ~Card()  {}
 };
 
 class Assasin : public Card
 {
     public:
-        Assasin(string n = "" , string e = "", string cardT = "" ,int cardI = 99) ;
-        Assasin(const Assasin &source) ;
 
-        virtual ~Assasin() override = default;
+        Assasin() ;
+
+        virtual ~Assasin() {}
+};
+
+
+class Tank : public Card
+{
+    public:
+
+        Tank() ;
+        virtual ~Tank() {}
+
+
+};
+
+
+class Mage : public Card
+{
+    public:
+
+        Mage() ;
+        virtual ~Mage() {}
+
+};
+
+
+class Support : public Card
+{
+    public:
+
+        Support() ;
+        virtual ~Support() {}
+
+
+};
+
+
+class Marksman : public Card
+{
+    public:
+
+        Marksman() ;
+        virtual ~Marksman() {}
+
 };
 
 
 
-
-
-
-
-
-
-#endif // CARD_H
-
-
-
-
-
+#endif // CARDS_H
