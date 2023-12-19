@@ -1,12 +1,12 @@
-Assasin	fire	Leoxane	1	5	5	a 
-Tank	fire	Mobayi	2	9	1	b 
-Mage	fire	Marcus Aurelius	3	4	6	b 
-Mage	fire	Bebi	4	3	7	c 
-Mage	water	Muccuk	5	4	6	d	
-Assasin	water	Bedocan	6	5	5	e 
-Marksman	water	Lorach	7	6	5	f
-Mage	water	Umai	8	5	5	g 
-Tank	earth	Bromen	9	4	5	h 
-Assasin	earth	Jagu	10	5	6	i	
-Marksman	earth	Atreus	11	6	6	j
-Mage	earth	Lisa	12	6	5	k
+Assasin	fire	Leoxane	0	5	5	a 
+Tank	fire	Mobayi	1	9	1	b 
+Mage	fire	Marcus Aurelius	2	4	6	b 
+Mage	fire	Bebi	3	3	7	c 
+Mage	water	Muccuk	4	4	6	d	
+Assasin	water	Bedocan	5	5	5	e 
+Marksman	water	Lorach	6	6	5	f
+Mage	water	Umai	7	5	5	g 
+Tank	earth	Bromen	8	4	5	h 
+Assasin	earth	Jagu	9	5	6	i	
+Marksman	earth	Atreus	10	6	6	j
+Mage	earth	Lisa	11	6	5	k
