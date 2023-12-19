@@ -1,12 +1,12 @@
-Leoxane	fire	assasin	1 skill explanations
-Mobayi	fire	tank	2 
-Marcus Aurelius	fire	mage	3 
-Bebi	fire	mage	4 
-Muccuk	water	mage	5	
-Bedocan	water	assasin	6 
-Lorach	water	adc	7
-Umai	water	mage	8 
-Bromen	earth	tank	9 
-Jagu	earth	assasin	10	
-Atreus	earth	adc	11
-Lisa	earth	mage	12
+Assasin	fire	Leoxane	1	5	5	a 
+Tank	fire	Mobayi	2	9	1	b 
+Mage	fire	Marcus Aurelius	3	4	6	b 
+Mage	fire	Bebi	4	3	7	c 
+Mage	water	Muccuk	5	4	6	d	
+Assasin	water	Bedocan	6	5	5	e 
+Marksman	water	Lorach	7	6	5	f
+Mage	water	Umai	8	5	5	g 
+Tank	earth	Bromen	9	4	5	h 
+Assasin	earth	Jagu	10	5	6	i	
+Marksman	earth	Atreus	11	6	6	j
+Mage	earth	Lisa	12	6	5	k
