@@ -1,43 +1,82 @@
-#include "card.h"
-#include <string>
 #include <iostream>
+#include "card.h"
+#include "skills.h"
+#include <string>
+#include <cstdlib>
+#include <algorithm>
+#include <Windows.h>
+
+
+
 using namespace std;
 
 
-Card::Card(string n, string e, string cardT,int cardI )
+void Card::setHp(int newHp)
 {
-    // Card Constructor
-
-    name = n;
-    element = e;
-    cardType = cardT ;
-    cardIndex = cardI ;
+    hp = newHp ;
 }
 
-Card::Card(const Card &source)
+void Card::setAtk(int newAtk)
 {
-    name = source.name;
-    cardType = source.cardType;
-    element = source.element;
-    cardIndex = source.cardIndex ;
+    atk = newAtk ;
 }
 
-Assasin::Assasin(string n  , string e , string cardT,int cardI  ) : Card(n,e,cardT,cardI)
+Card::Card()
 {
-
-}
-
-Assasin::Assasin(const Assasin &source) : Card(source)
-{
-
+    this->name = "None" ;
+    this->element = "None" ;
+    this->setAtk(0)  ;
+    this->setHp(0);
+    this->cardType = "None" ;
+    this->cardIndex = 99;
+    this->skill = nullptr ;
 }
 
 void Card::displayCard()
 {
-    cout << "name: " << this->name;
-    cout << "\ncard type: " << this->cardType;
-    cout << "\nelement: " << this->element;
+    cout << "Name: " << this->name;
+    cout << "\nType: " << this->cardType;
+    cout << "\nAttack Damage: " << this->atk << " dmg";
+    cout << "\nHealth:" << this->hp << " hp";
+    cout << "\nSkill: " << this->skillString;
+}
+
+int Card::attack()
+{
+    return 1 ;
+}
+
+
+Assasin::Assasin() : Card()
+{
 
 }
+
+
+Mage::Mage() : Card()
+{
+
+}
+
+
+Tank::Tank() : Card()
+{
+
+}
+
+
+Support::Support() : Card()
+{
+
+}
+
+
+Marksman::Marksman() : Card()
+{
+
+}
+
+
+
 
 
