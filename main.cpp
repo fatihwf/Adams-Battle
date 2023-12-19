@@ -1,20 +1,41 @@
-#include <iostream>
-#include <vector>
 #include "card.h"
-#include <Windows.h>
+#include "skills.h"
+#include "game.h"
 #include <iostream>
-using namespace std;
+#include <fstream>
+#include <string>
+#include <iomanip>
+#include <vector>
+#define CARDCOUNT 12  // how many cards do we have
 
+using namespace std;
+typedef void (*FunctionPointer)(); // void function pointer type
+
+    // functions
 int displayMainMenu() ;
-void viewCards(vector<Card> allCards);
+int credits() ;
+void viewCards(Card** cards,int size) ;
+void assignSkills(Card** cards, FunctionPointer* skills, int size) ;
+void readCardsFromFile(const string& filename,Card** cards ,int size) ;
+
+
+
 
 int main()
 {
-    Assasin Leoxane("Leoxane","Fire","Assasin",1) ;
 
+    // get card array dynamically
 
-    vector<Card> allCards = {Leoxane} ;
-    cout << allCards[0].name;
+    Card** cards = new Card*[CARDCOUNT] ;
+    readCardsFromFile("cards.txt",cards,CARDCOUNT);
+
+     // get skills array dynamically. skills is a function pointer array
+    FunctionPointer* skills = new FunctionPointer[CARDCOUNT];
+    getSkills(skills,CARDCOUNT) ;  // skills.h
+
+    // assign skill to each card
+    assignSkills(cards,skills,CARDCOUNT) ; // skills.h
+
 
 
     // start program
@@ -25,6 +46,10 @@ int main()
         {
             case 1:
                 // Play vs Computer
+
+
+
+
                 break;
             case 2:
                 // Player vs Player
@@ -34,10 +59,11 @@ int main()
                 break ;
             case 4:
                 // display Cards
-                viewCards(allCards);
+                viewCards(cards,CARDCOUNT) ;
                 break ;
             case 5:
                 // credits
+                credits() ;
                 break ;
             case 6:
                 cout << "\n\nExiting the game.." ;
@@ -49,12 +75,25 @@ int main()
         }
     }
 
+
+    // Deallocate Memory
+    for(int i = 0; i<CARDCOUNT; i++)
+    {
+        delete cards[i];
+    }
+    delete[] cards ;
+
+
+
+    delete[] skills;
+
+    return(0) ;
 }
 
 int displayMainMenu()
 {
     int a;
-
+    system("cls") ;
     cout << "Press the number you want to select.\n\n" ;
     cout << "1. Player vs Computer\n" ;
     cout << "2. Player vs Player\n" ;
@@ -68,54 +107,213 @@ int displayMainMenu()
 
 }
 
-void viewCards(vector<Card> allCards)
+
+
+void readCardsFromFile(const string& filename, Card** cards ,int size)
 {
-    vector<Card> fire  ;
-    vector<Card> water ;
-    vector<Card> earth ;
+    ifstream cardFile(filename);
 
-    for(int i = 0; i<allCards.size(); i++)
+    if (!cardFile.is_open())
     {
-        if(allCards[i].element == "Fire")
+        cerr << "Error opening the file!" << endl;
+    }
+
+
+    int i;
+    string cardtype ;
+
+    for(i = 0; i<size; i++)
+    {
+
+        getline(cardFile, cardtype, '\t');
+
+        if(cardtype == "Assasin")
         {
-            fire.push_back(allCards[i]) ;
+            cards[i] = new Assasin();
         }
-        else if(allCards[i].element == "Water" )
+        else if(cardtype == "Tank")
         {
-            water.push_back(allCards[i]) ;
+            cards[i] = new Tank();
+
         }
-        else if(allCards[i].element == "Earth" )
+        else if(cardtype == "Mage")
         {
-            earth.push_back(allCards[i]) ;
+            cards[i] = new Mage();
+
         }
+        else if(cardtype == "Marksman")
+        {
+            cards[i] = new Marksman();
+
+        }
+        else if(cardtype == "Support")
+        {
+            cards[i] = new Support();
+
+        }
+        else
+        {
+            continue;
+        }
+
+        int hp, atk ;
+        cards[i]->cardType = cardtype ;
+        getline(cardFile, cards[i]->element, '\t');
+        getline(cardFile, cards[i]->name, '\t');
+        cardFile >> cards[i]->cardIndex ;
+        cardFile >> ws;
+        cardFile >> hp;
+        cardFile >> ws;
+        cardFile >> atk;
+        cardFile >> ws;
+        getline(cardFile, cards[i]->skillString, '\n') ;
+
+        cards[i]->setAtk(atk) ;
+        cards[i]->setHp(hp) ;
+
+
+    }
+
+    cardFile.close();
+
+}
+
+void tutorial()
+{
+    system("cls") ;
+    cout << "Welcome to tutorial. Select the topic you want to learn.\n\n" ;
+
+    cout << "1. Card Types" ;
+    cout << "Creating a deck" ;
+
+}
+
+void viewCards(Card** cards, int cardsSize)
+{
+    vector<Card*> fire;
+    vector<Card*> water;
+    vector<Card*> earth;
+
+    int f = 0; // fire cards counter
+    int w = 0; // water cards counter
+    int e = 0; // earth cards counter
+
+    for(int i = 0; i<cardsSize; i++)
+    {
+        if(cards[i]->element == "fire")
+        {
+            fire.push_back(cards[i]) ;
+            f++;
+        }
+        else if(cards[i]->element == "water")
+        {
+            water.push_back(cards[i]) ;
+            w++;
+        }
+        else if(cards[i]->element == "earth")
+        {
+            earth.push_back(cards[i]) ;
+            e++;
+        }
+    }
+
+        // display cards using setw
+
+
+        cout << setw(17) << left << "Fire Cards" << setw(28) << left << "Water Cards" << setw(37) << left << "Earth Cards" << endl ;
+
+        int x=0,y=0,z=0;
+
+
+        while((x<f) && (y<w) && (z<e))
+        {
+            if(x<f)
+            {
+                cout << x+1 << "." << setw(17) << left <<fire[x]->name ;
+                x++ ;
+            }
+            else
+            {
+                cout << setw(17) << left << " " ;
+            }
+
+            if(y<w)
+            {
+                cout << f+y+1 << "." << setw(26) << left << water[y]->name ;
+                y++ ;
+            }
+            else
+            {
+                cout << setw(26) << left << " " ;
+            }
+
+            if(z<e)
+            {
+                cout << f+w+z+1 << "." << setw(35) << left << earth[z]->name ;
+                z++ ;
+            }
+            else
+            {
+                cout << " " ;
+            }
+            cout << "\n" ;
+
+        }
+
+    cout << "\nSelect the number of the card you want to view (0 for returning main menu): " ;
+    int s;
+    cin >> s;
+
+    while( (s<0) || (s>cardsSize) )
+    {
+        cout << "\ninvalid choice please try again->\n" ;
+        cout << "\nSelect the number of the card you want to view (0 for returning main menu): " ;
+        cin >> s;
+    }
+
+
+
+    if(s==0)
+    {
+        return;
     }
 
     system("cls") ;
 
-    cout << "Select the card you want to view.\n\n" ;
-
-    cout << "Fire Cards:  " ;
-        for(int i = 0; i<fire.size(); i++)
+    for(int i=0; i<cardsSize; i++)
     {
-        cout << i+1 << "." << fire[i].name ;
-    }
-
-    cout << "\n" ;
-    int selection ;
-    cin >> selection ;
-
-    system("cls") ;
-
-    for(int i = 0; i<allCards.size(); i++)
-    {
-        if(selection == allCards[i].cardIndex)
+        if(cards[i]->cardIndex == s)
         {
-            allCards[i].displayCard() ;
+            cards[i]->displayCard();
             break;
         }
     }
 
+    cout << "\n\n\nPress anything to return:\n";
+    cin.ignore(1000,'\n');
+    getchar() ;
+
+    fire.clear();
+    water.clear();
+    earth.clear();
+
+    viewCards(cards,cardsSize);
+
+}
+
+int credits()
+{
+    system("cls") ;
+    cout << "Developers\n" << endl;
+    cout << "Kaan Aydemir" << endl;
+    cout << "Edip Alper Selcuk" << endl;
+    cout << "Fatih Gazi Goc" << endl;
+
+
+
+    cout << "\n\nPress anything to return main menu\n" ;
     cin.ignore(1000,'\n') ;
     getchar() ;
 
+    return 0;
 }
